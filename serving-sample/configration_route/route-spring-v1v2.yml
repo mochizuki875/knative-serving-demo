@@ -1,0 +1,13 @@
+apiVersion: serving.knative.dev/v1
+kind: Route
+metadata:
+  name: spring-boot-web
+  namespace: default
+spec:
+  traffic: 
+  - percent: 70
+    revisionName: spring-boot-web-v1
+    tag: v1
+  - percent: 30
+    revisionName: spring-boot-web-v2
+    tag: v2

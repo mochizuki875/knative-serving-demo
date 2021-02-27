@@ -1,0 +1,20 @@
+apiVersion: serving.knative.dev/v1
+kind: Configuration
+metadata:
+  name: spring-boot-web
+spec:
+  template:
+    metadata:
+      annotations:  # オートスケール関連パラメータ
+        autoscaling.knative.dev/minScale: "1" # 最小スケール数(default 0)
+        autoscaling.knative.dev/maxScale: "4" # 最大スケール数(default 0 unlimited)
+        autoscaling.knative.dev/metric: "rps" # オートスケールの指標とするメトリクスを指定(default concurrency)
+        autoscaling.knative.dev/target: "3" # オートスケールのメトリクス値soft 超過してもリクエストは受け付ける(default 100)
+      name: spring-boot-web-v1 # 作成するrevision名
+    spec:
+      containers:
+        - image: keitamochizuki/spring-boot-web
+          env:
+            - name: APP_VERSION
+              value: "v1"
+

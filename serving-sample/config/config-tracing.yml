@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    serving.knative.dev/release: v0.20.0
+  name: config-tracing
+  namespace: knative-serving
+data:
+  # This may be "zipkin" or "stackdriver", the default is "none"
+  backend: "zipkin"
+  # URL to zipkin collector where traces are sent.
+  # This must be specified when backend is "zipkin"
+  zipkin-endpoint: "http://zipkin.istio-system.svc.cluster.local:9411/api/v2/spans"
+  # Enable zipkin debug mode. This allows all spans to be sent to the server
+  # bypassing sampling.
+  debug: "true"
+  # Percentage (0-1) of requests to trace
+  sample-rate: "1"

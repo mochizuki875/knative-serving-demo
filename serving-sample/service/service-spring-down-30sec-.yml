@@ -1,0 +1,16 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: spring-boot-web
+spec:
+  template:
+    metadata:
+      annotations:
+        autoscaling.knative.dev/minScale: "0" # 最小スケール数(default 0)
+        autoscaling.knative.dev/window: "30s" # リクエストがなければ30秒でゼロスケール
+    spec:
+      containers:
+        - image: keitamochizuki/spring-boot-web
+          env:
+            - name: APP_VERSION
+              value: "v1"
